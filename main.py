@@ -63,22 +63,21 @@ if pulp.LpStatus[problem.status] == 'Optimal':
         for weekend in weekends:
             if pulp.value(x[(employee, weekend)]) == 1:
                 results.append({'Employee': employee, 'Weekend': weekend})
+    csv_file = 'scheduling_results.csv'              
+    with open(csv_file, mode='w', newline='') as file:
+        fieldnames = ['Employee', 'Weekend']
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        # Write the header
+        writer.writeheader()
+        # Write the rows
+        for row in results:
+            writer.writerow(row)
+
+        print(f"Scheduling results have been saved to {csv_file}")    
+
 else:
     print("No optimal solution found.")
 
-# Define the CSV file name
-csv_file = 'scheduling_results.csv'
+
 
 # Write the results to the CSV file
-with open(csv_file, mode='w', newline='') as file:
-    fieldnames = ['Employee', 'Weekend']
-    writer = csv.DictWriter(file, fieldnames=fieldnames)
-
-    # Write the header
-    writer.writeheader()
-
-    # Write the rows
-    for row in results:
-        writer.writerow(row)
-
-print(f"Scheduling results have been saved to {csv_file}")
