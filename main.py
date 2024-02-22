@@ -19,7 +19,10 @@ month_weekend_mapping = {
     'december': [r for r in range(48, 53)] # 48 to 5
 }
 
-two_people_weekends = [value for value in month_weekend_mapping.values()]
+two_people_weekends = []
+
+for value in month_weekend_mapping.values():
+    two_people_weekends.extend(value)
 
 # Decision variables
 # x[i][j] is 1 if employee i works on weekend j, 0 otherwise
@@ -67,16 +70,15 @@ else:
 csv_file = 'scheduling_results.csv'
 
 # Write the results to the CSV file
-if pulp.LpStatus[problem.status] == 'Optimal':
-    with open(csv_file, mode='w', newline='') as file:
-        fieldnames = ['Employee', 'Weekend']
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
+with open(csv_file, mode='w', newline='') as file:
+    fieldnames = ['Employee', 'Weekend']
+    writer = csv.DictWriter(file, fieldnames=fieldnames)
 
-        # Write the header
-        writer.writeheader()
+    # Write the header
+    writer.writeheader()
 
-        # Write the rows
-        for row in results:
-            writer.writerow(row)
+    # Write the rows
+    for row in results:
+        writer.writerow(row)
 
-    print(f"Scheduling results have been saved to {csv_file}")
+print(f"Scheduling results have been saved to {csv_file}")
