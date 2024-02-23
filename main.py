@@ -77,7 +77,3 @@ if pulp.LpStatus[problem.status] == 'Optimal':
 
 else:
     print("No optimal solution found.")
-
-
-
-# Write the results to the CSV file
